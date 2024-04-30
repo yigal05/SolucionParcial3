@@ -42,51 +42,62 @@ void SettearString(char *str) {
 }
 
 
+
 int main() {
-    char dato[] = "716838;Male;Aladino Longo;Vigevano;PV;Pavia;27029;;Europe;1/7/1954";
+    FILE *archivo = fopen("D:\\Users\\PC\\Desktop\\PARCIAL3\\BASES\\Customers.csv", "r");
     FILE *tina = fopen("D:\\Users\\PC\\Desktop\\PARCIAL3\\DATA\\CustomersData.txt", "wb");
-    
-    Customer persona1;
+    char primera_linea[200];
+    fgets(primera_linea, sizeof(primera_linea), archivo);
+    char dato[200];
+    int contando =0;
+    while (fgets(dato, sizeof(dato), archivo) != NULL ) {
+        
+        Customer persona1;
 
-    SettearString(dato);
-    char copia[100];
-    strcpy(copia, dato); 
+        SettearString(dato);
+        char copia[200];
+        strcpy(copia, dato); 
 
-    unsigned int a = atoi(strtok(copia, ";"));
-    persona1.CustomerKey= a;
+        unsigned int a = atoi(strtok(copia, ";"));
+        persona1.CustomerKey= a;
 
-    char genero[7];
-    strcpy(genero, strtok(NULL, ";"));
-    strcpy( persona1.gender,genero);
+        char genero[7];
+        strcpy(genero, strtok(NULL, ";"));
+        strcpy( persona1.gender,genero);
 
-    char nombre[40];
-    strcpy(nombre, strtok(NULL, ";"));
-    strcpy( persona1.name,nombre);
+        char nombre[40];
+        strcpy(nombre, strtok(NULL, ";"));
+        strcpy( persona1.name,nombre);
 
-    char ciudad[40];
-    strcpy(ciudad, strtok(NULL, ";"));
-    strcpy( persona1.city,ciudad);
+        char ciudad[40];
+        strcpy(ciudad, strtok(NULL, ";"));
+        strcpy( persona1.city,ciudad);
 
-    char statecode[40];
-    strcpy(statecode, strtok(NULL, ";"));
-    strcpy( persona1.stateCode,statecode);
+        char statecode[40];
+        strcpy(statecode, strtok(NULL, ";"));
+        strcpy( persona1.stateCode,statecode);
 
-    char state[20];
-    strcpy(state, strtok(NULL, ";"));
-    strcpy( persona1.state,state);
+        char state[20];
+        strcpy(state, strtok(NULL, ";"));
+        strcpy( persona1.state,state);
 
-    unsigned int b = atoi(strtok(NULL, ";"));
-    persona1.zipCode=b;
+        unsigned int b = atoi(strtok(NULL, ";"));
+        persona1.zipCode=b;
 
-    char pais[20];
-    strcpy(pais, strtok(NULL, ";"));
-    strcpy( persona1.country,pais);
+        char pais[20];
+        strcpy(pais, strtok(NULL, ";"));
+        strcpy( persona1.country,pais);
 
-    char continente[20];
-    strcpy(continente, strtok(NULL, ";"));
-    strcpy(persona1.continent,continente);    
+        char continente[20];
+        strcpy(continente, strtok(NULL, ";"));
+        strcpy(persona1.continent,continente);    
 
-    sscanf(strtok(NULL, ";"), "%hhu/%hhu/%hu", &persona1.birthDay.DD, &persona1.birthDay.MM, &persona1.birthDay.AAAA);
-    fwrite(&persona1, sizeof(persona1),1, tina);
+        sscanf(strtok(NULL, ";"), "%hhu/%hhu/%hu", &persona1.birthDay.DD, &persona1.birthDay.MM, &persona1.birthDay.AAAA);
+        fwrite(&persona1, sizeof(persona1),1, tina);
+        contando++;
+    }
+
+    fclose(archivo);
+    fclose(tina);
     return 0;
 }
