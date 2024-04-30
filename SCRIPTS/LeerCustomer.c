@@ -44,6 +44,7 @@ void SettearString(char *str) {
 
 int main() {
     char dato[] = "716838;Male;Aladino Longo;Vigevano;PV;Pavia;27029;Italy;Europe;1/7/1954";
+    FILE *tina = fopen("D:\\Users\\PC\\Desktop\\PARCIAL3\\DATA\\CustomersData.txt", "wb");
     
     Customer persona1;
 
@@ -86,7 +87,6 @@ int main() {
     strcpy(persona1.continent,continente);    
 
     sscanf(strtok(NULL, ";"), "%hhu/%hhu/%hu", &persona1.birthDay.DD, &persona1.birthDay.MM, &persona1.birthDay.AAAA);
-
-    printf("%s", persona1.city);
+    fwrite(&persona1, sizeof(persona1),1, tina);
     return 0;
 }
